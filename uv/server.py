@@ -25,9 +25,27 @@ def echo(message: str) -> str:
 
 
 @mcp.tool
+def echo_rollback(message: str) -> str:
+    """Return the given message unchanged."""
+    return message
+
+
+@mcp.tool
 def whoami() -> dict[str, str]:
     """Report the deployment's slug, to confirm which server answered."""
     return {"slug": os.environ.get("PROJECT_SLUG", "unknown")}
+
+
+@mcp.tool
+def get_env(name: str) -> dict[str, object]:
+    """Report whether an environment variable is set, and its value.
+
+    Used to verify secret propagation: configure a project secret in
+    mcphost.eu, deploy, then call get_env with the secret's name to confirm it
+    reached the running container as an environment variable.
+    """
+    value = os.environ.get(name)
+    return {"name": name, "set": value is not None, "value": value}
 
 
 def main() -> None:

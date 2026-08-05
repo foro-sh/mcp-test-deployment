@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "dummy-mcp-server-poetry"
+version = "0.1.0"
+description = "Dummy FastMCP server for testing mcphost.eu deployments (poetry)"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12,<4.0"
+fastmcp = ">=2.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

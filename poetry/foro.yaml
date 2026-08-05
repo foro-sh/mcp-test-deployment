@@ -1,0 +1,5 @@
+# Deploy manifest for foro.sh (poetry fixture)
+name: dummy-mcp-server-poetry
+entrypoint: server.py
+python_version: "3.12"
+port: 8002

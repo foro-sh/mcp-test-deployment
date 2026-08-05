@@ -1,0 +1,5 @@
+# Deploy manifest for foro.sh (requirements.txt fixture)
+name: dummy-mcp-server-requirements
+entrypoint: server.py
+python_version: "3.12"
+port: 8004

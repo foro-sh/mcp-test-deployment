@@ -1,0 +1,12 @@
+[project]
+name = "dummy-mcp-server-pdm"
+version = "0.1.0"
+description = "Dummy FastMCP server for testing mcphost.eu deployments (pdm)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastmcp>=2.0.0",
+]
+
+[tool.pdm]
+distribution = false

@@ -1,0 +1,5 @@
+# Deploy manifest for foro.sh (pipenv fixture)
+name: dummy-mcp-server-pipenv
+entrypoint: server.py
+python_version: "3.12"
+port: 8003

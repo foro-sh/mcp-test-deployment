@@ -1,0 +1,5 @@
+# Deploy manifest for foro.sh (pdm fixture)
+name: dummy-mcp-server-pdm
+entrypoint: server.py
+python_version: "3.12"
+port: 8001
