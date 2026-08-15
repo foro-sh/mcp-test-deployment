@@ -1,7 +1,7 @@
 """Dummy FastMCP server for exercising mcphost.eu deployments (pdm fixture).
 
 Exposes a few trivial tools over the streamable HTTP transport. The platform
-injects MCP_PORT (the port to bind) and PROJECT_SLUG at container start; any
+injects PORT (the port to bind) and PROJECT_SLUG at container start; any
 project secrets are injected as additional environment variables.
 """
 
@@ -43,7 +43,7 @@ def get_env(name: str) -> dict[str, object]:
 
 
 def main() -> None:
-    port = int(os.environ.get("MCP_PORT", "8000"))
+    port = int(os.environ.get("PORT", "8000"))
     mcp.run(transport="http", host="0.0.0.0", port=port)
 
 

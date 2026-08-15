@@ -1,0 +1,16 @@
+[project]
+name = "dummy-mcp-server-requirements"
+version = "0.1.0"
+description = "Dummy FastMCP server for testing mcphost.eu deployments (requirements.txt)"
+readme = "README.md"
+# Upper-bounded so foro resolves 3.12, which is what requirements.txt was
+# compiled against (`uv pip compile --python-version 3.12`).
+requires-python = ">=3.12,<3.13"
+# Dependencies live in requirements.txt. This file is here because foro reads
+# the name and the interpreter constraint from it (foro-sh/platform#754), and
+# that same pyproject.toml is what makes detection pick plain uv - so this
+# fixture has to ask for uv-pip by name to keep exercising that install path.
+
+[tool.foro]
+dependency_manager = "uv-pip"
+port = 8004
