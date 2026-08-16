@@ -13,6 +13,7 @@ foro.sh's build pipeline detects:
 | [`poetry/`](poetry) | Poetry | `poetry.lock` / `[tool.poetry]` |
 | [`pipenv/`](pipenv) | pipenv | `Pipfile` / `Pipfile.lock` |
 | [`requirements/`](requirements) | uv-pip | `requirements.txt` (no `pyproject.toml`) |
+| [`typescript/`](typescript) | npm | `package.json` / `tsconfig.json` |
 
 Each folder has its own `foro.yaml` manifest, so the repo has more than one
 deployable project — see foro-sh/platform#296 (manifest scanning + per-manager

@@ -1,0 +1,22 @@
+{
+  "name": "dummy-mcp-server-typescript",
+  "version": "0.1.0",
+  "description": "Dummy MCP server for testing mcphost.eu deployments (TypeScript)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0"
+  }
+}

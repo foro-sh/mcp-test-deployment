@@ -1,0 +1,5 @@
+# Deploy manifest for foro.sh (TypeScript fixture)
+name: dummy-mcp-server-typescript
+entrypoint: server.ts
+node_version: "20"
+port: 8005
