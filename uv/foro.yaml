@@ -1,5 +1,0 @@
-# Deploy manifest for foro.sh
-name: dummy-mcp-server-uv
-entrypoint: server.py
-python_version: "3.12"
-port: 8000

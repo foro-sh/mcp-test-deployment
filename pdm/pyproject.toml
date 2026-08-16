@@ -10,3 +10,6 @@ dependencies = [
 
 [tool.pdm]
 distribution = false
+
+[tool.foro]
+port = 8011
