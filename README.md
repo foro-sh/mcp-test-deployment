@@ -1,10 +1,11 @@
 # mcp-test-deployment
 
-Dummy [FastMCP](https://github.com/jlowin/fastmcp) servers used to test
-deployments on [mcphost.eu](https://mcphost.eu). Each subfolder is an
+Dummy [FastMCP](https://github.com/jlowin/fastmcp) / [TypeScript MCP
+SDK](https://github.com/modelcontextprotocol/typescript-sdk) servers used to
+test deployments on [mcphost.eu](https://mcphost.eu). Each subfolder is an
 independent, deployable MCP project — same trivial tool set, different
-Python dependency manager — so this one repo can exercise every manager
-foro.sh's build pipeline detects:
+dependency manager (mostly Python, one Node) — so this one repo can exercise
+every manager foro.sh's build pipeline detects:
 
 | Folder | Manager | Detected via |
 | --- | --- | --- |
@@ -13,14 +14,15 @@ foro.sh's build pipeline detects:
 | [`poetry/`](poetry) | Poetry | `poetry.lock` / `[tool.poetry]` |
 | [`pipenv/`](pipenv) | pipenv | `Pipfile` / `Pipfile.lock` |
 | [`requirements/`](requirements) | uv-pip | explicit `dependency_manager = "uv-pip"` |
+| [`typescript/`](typescript) | npm | `package.json` |
 
-Each folder has its own `pyproject.toml`, so the repo has more than one
-deployable project — see foro-sh/platform#296 (config scanning + per-manager
-build detection).
+Each folder has its own `pyproject.toml` (Python) or `package.json`
+(`typescript/`), so the repo has more than one deployable project — see
+foro-sh/platform#296 (config scanning + per-manager build detection).
 
-`requirements/` asks for its manager by name because every deployable project
-now carries a `pyproject.toml` (foro-sh/platform#754), and that file is what
-detection reaches before it ever looks for a `requirements.txt`.
+`requirements/` asks for its manager by name because every deployable Python
+project now carries a `pyproject.toml` (foro-sh/platform#754), and that file
+is what detection reaches before it ever looks for a `requirements.txt`.
 
 ## Run any of them locally
 
@@ -40,11 +42,14 @@ at `/mcp/`.
 Each `pyproject.toml` gives the platform the project's name and its
 interpreter constraint; the entrypoint is `server.py` by inference, and the
 `[tool.foro]` table carries only what the file itself can't say (the port
-here, plus `requirements/`'s dependency manager). The platform locates
-deployable directories anywhere in the repo tree, builds the image with the
-detected dependency manager, and injects `PORT` and `FASTMCP_PORT` (the port
-to bind — `MCP_PORT` is gone) plus `PROJECT_SLUG` at container start;
-project secrets arrive as additional environment variables.
+here, plus `requirements/`'s dependency manager). `typescript/`'s
+`package.json` works the same way via its `"foro"` key — `main` there points
+`npm run build`'s output (`dist/server.js`), so the platform can infer the
+entrypoint too. The platform locates deployable directories anywhere in the
+repo tree, builds the image with the detected dependency manager, and injects
+`PORT` and `FASTMCP_PORT` (the port to bind — `MCP_PORT` is gone) plus
+`PROJECT_SLUG` at container start; project secrets arrive as additional
+environment variables.
 
 Interpreter per fixture: `uv/`, `pdm/` and `poetry/` say `>=3.12` and so build
 on the newest Python foro allows; `pipenv/` and `requirements/` cap themselves

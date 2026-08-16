@@ -7,3 +7,7 @@ __pycache__/
 
 # Local env
 .env
+
+# Node / TypeScript
+node_modules/
+dist/
