@@ -1,7 +1,7 @@
 // Dummy MCP server for exercising mcphost.eu deployments (TypeScript fixture).
 //
 // Exposes the same trivial tool set as the Python fixtures, over the
-// streamable HTTP transport. The platform injects MCP_PORT (the port to
+// streamable HTTP transport. The platform injects PORT (the port to
 // bind) and PROJECT_SLUG at container start; any project secrets are
 // injected as additional environment variables.
 
@@ -60,7 +60,7 @@ mcp.registerTool(
 const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
 await mcp.connect(transport);
 
-const port = Number(process.env.MCP_PORT ?? 8000);
+const port = Number(process.env.PORT ?? 8000);
 createServer(async (req, res) => {
   if (req.url === "/mcp/" || req.url === "/mcp") {
     await transport.handleRequest(req, res);

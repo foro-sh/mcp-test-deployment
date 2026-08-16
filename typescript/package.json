@@ -4,6 +4,7 @@
   "description": "Dummy MCP server for testing mcphost.eu deployments (TypeScript)",
   "private": true,
   "type": "module",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js"
@@ -18,5 +19,8 @@
   "devDependencies": {
     "@types/node": "^20.14.0",
     "typescript": "^5.5.0"
+  },
+  "foro": {
+    "port": 8005
   }
 }
