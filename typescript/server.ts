@@ -57,12 +57,16 @@ mcp.registerTool(
   },
 );
 
-const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
-await mcp.connect(transport);
-
 const port = Number(process.env.PORT ?? 8000);
 createServer(async (req, res) => {
   if (req.url === "/mcp/" || req.url === "/mcp") {
+    // A transport instance takes exactly one initialize handshake; every
+    // request after that throws (silently, into an empty 500 - the SDK's
+    // Hono wrapper swallows it). Stateless mode means one transport per
+    // request, not one for the process lifetime.
+    const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+    res.on("close", () => transport.close());
+    await mcp.connect(transport);
     await transport.handleRequest(req, res);
     return;
   }
