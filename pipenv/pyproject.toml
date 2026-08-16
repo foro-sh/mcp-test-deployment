@@ -1,0 +1,14 @@
+[project]
+name = "dummy-mcp-server-pipenv"
+version = "0.1.0"
+description = "Dummy FastMCP server for testing mcphost.eu deployments (pipenv)"
+readme = "README.md"
+# Upper-bounded so foro resolves 3.12: `pipenv install --deploy` refuses to run
+# on an interpreter the Pipfile's [requires] doesn't name.
+requires-python = ">=3.12,<3.13"
+# Dependencies live in the Pipfile - this file is here because foro reads the
+# name and the interpreter constraint from it (foro-sh/platform#754). The
+# Pipfile still wins dependency-manager detection.
+
+[tool.foro]
+port = 8003
