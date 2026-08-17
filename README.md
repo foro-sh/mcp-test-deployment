@@ -1,13 +1,14 @@
 # mcp-test-deployment
 
 Dummy [FastMCP](https://github.com/jlowin/fastmcp) / [TypeScript MCP
-SDK](https://github.com/modelcontextprotocol/typescript-sdk) servers used to
-test deployments on [mcphost.eu](https://mcphost.eu). Each subfolder is an
+SDK](https://github.com/modelcontextprotocol/typescript-sdk) / [Rust MCP
+SDK](https://github.com/modelcontextprotocol/rust-sdk) servers used to test
+deployments on [mcphost.eu](https://mcphost.eu). Each subfolder is an
 independent, deployable MCP project — same trivial tool set, different
-dependency manager (mostly Python, one Node) — so this one repo can exercise
-every manager foro.sh's build pipeline detects:
+dependency manager (mostly Python, one Node, one Rust) — so this one repo can
+exercise every manager foro.sh's build pipeline detects:
 
-| Folder | Manager | Detected via |
+| Folder | Runtime / manager | Detected via |
 | --- | --- | --- |
 | [`uv/`](uv) | uv | `uv.lock` |
 | [`pdm/`](pdm) | pdm | `pdm.lock` |
@@ -15,10 +16,12 @@ every manager foro.sh's build pipeline detects:
 | [`pipenv/`](pipenv) | pipenv | `Pipfile` / `Pipfile.lock` |
 | [`requirements/`](requirements) | uv-pip | explicit `dependency_manager = "uv-pip"` |
 | [`typescript/`](typescript) | npm | `package.json` |
+| [`rust/`](rust) | Cargo | `Cargo.toml` |
 
-Each folder has its own `pyproject.toml` (Python) or `package.json`
-(`typescript/`), so the repo has more than one deployable project — see
-foro-sh/platform#296 (config scanning + per-manager build detection).
+Each folder has its own `pyproject.toml` (Python), `package.json`
+(`typescript/`), or `Cargo.toml` (`rust/`), so the repo has more than one
+deployable project — see foro-sh/platform#296 (config scanning + per-manager
+build detection).
 
 `requirements/` asks for its manager by name because every deployable Python
 project now carries a `pyproject.toml` (foro-sh/platform#754), and that file
@@ -32,7 +35,7 @@ uv sync && uv run server.py
 ```
 
 (swap `uv sync && uv run` for the matching manager's install/run commands —
-see each folder's README).
+`cargo run` for `rust/` — see each folder's README).
 
 The server binds to `0.0.0.0` on `$PORT` (default `8000`) and serves MCP
 at `/mcp/`.
@@ -45,11 +48,13 @@ interpreter constraint; the entrypoint is `server.py` by inference, and the
 here, plus `requirements/`'s dependency manager). `typescript/`'s
 `package.json` works the same way via its `"foro"` key — `main` there points
 `npm run build`'s output (`dist/server.js`), so the platform can infer the
-entrypoint too. The platform locates deployable directories anywhere in the
-repo tree, builds the image with the detected dependency manager, and injects
-`PORT` and `FASTMCP_PORT` (the port to bind — `MCP_PORT` is gone) plus
-`PROJECT_SLUG` at container start; project secrets arrive as additional
-environment variables.
+entrypoint too. `rust/`'s `Cargo.toml` needs no `[tool.foro]` table at all —
+name comes from `[package].name`, the entrypoint is the compiled binary's
+default path (`target/release/<name>`), and the default port already matches.
+The platform locates deployable directories anywhere in the repo tree, builds
+the image with the detected dependency manager, and injects `PORT` and
+`FASTMCP_PORT` (the port to bind — `MCP_PORT` is gone) plus `PROJECT_SLUG` at
+container start; project secrets arrive as additional environment variables.
 
 Interpreter per fixture: `uv/`, `pdm/` and `poetry/` say `>=3.12` and so build
 on the newest Python foro allows; `pipenv/` and `requirements/` cap themselves
