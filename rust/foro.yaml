@@ -1,0 +1,4 @@
+# Deploy manifest for foro.sh
+name: dummy-mcp-server-rust
+entrypoint: dummy-mcp-server-rust
+port: 8000
