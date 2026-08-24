@@ -4,6 +4,7 @@ __pycache__/
 
 # uv / virtualenv
 .venv/
+.pdm-python
 
 # Local env
 .env
