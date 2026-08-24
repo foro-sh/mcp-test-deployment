@@ -1,0 +1,5 @@
+# Deploy manifest for foro.sh
+name: dummy-mcp-server-typescript
+entrypoint: dist/server.js
+build: npm ci && npm run build
+port: 8000

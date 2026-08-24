@@ -11,3 +11,7 @@ __pycache__/
 
 # Rust
 target/
+
+# Node
+node_modules/
+dist/
