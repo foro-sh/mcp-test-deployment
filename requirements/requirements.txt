@@ -39,7 +39,6 @@ cryptography==49.0.0
     #   authlib
     #   joserfc
     #   pyjwt
-    #   secretstorage
 cyclopts==4.21.0
     # via fastmcp-slim
 dnspython==2.8.0
@@ -50,9 +49,9 @@ email-validator==2.3.0
     # via pydantic
 exceptiongroup==1.3.1
     # via fastmcp-slim
-fastmcp==3.4.4
+fastmcp==3.4.7
     # via -r requirements.in
-fastmcp-slim==3.4.4
+fastmcp-slim==3.4.7
     # via fastmcp
 griffelib==2.1.0
     # via fastmcp-slim
@@ -79,10 +78,6 @@ jaraco-context==6.1.2
     # via keyring
 jaraco-functools==4.6.0
     # via keyring
-jeepney==0.9.0
-    # via
-    #   keyring
-    #   secretstorage
 joserfc==1.7.3
     # via
     #   authlib
@@ -169,8 +164,6 @@ rpds-py==2026.6.3
     # via
     #   jsonschema
     #   referencing
-secretstorage==3.5.0
-    # via keyring
 sse-starlette==3.4.5
     # via mcp
 starlette==1.3.1

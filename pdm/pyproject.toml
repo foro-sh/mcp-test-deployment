@@ -5,7 +5,7 @@ description = "Dummy FastMCP server for testing mcphost.eu deployments (pdm)"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastmcp>=2.0.0",
+    "fastmcp>=3.4.7",
 ]
 
 [tool.pdm]
