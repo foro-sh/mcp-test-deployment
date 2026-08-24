@@ -1,10 +1,17 @@
 # mcp-test-deployment
 
-Dummy [FastMCP](https://github.com/jlowin/fastmcp) servers used to test
-deployments on [mcphost.eu](https://mcphost.eu). Each subfolder is an
-independent, deployable MCP project — same trivial tool set, different
-Python dependency manager — so this one repo can exercise every manager
-foro.sh's build pipeline detects:
+Dummy MCP servers used to test deployments on [mcphost.eu](https://mcphost.eu).
+Each subfolder is an independent, deployable MCP project — same trivial tool
+set, different language/dependency manager — so this one repo can exercise
+every manager foro.sh's build pipeline detects.
+
+The five Python fixtures share [FastMCP](https://github.com/jlowin/fastmcp)
+3.x (stable), which implements the legacy handshake-based MCP protocol (up to
+`2025-11-25`). The `rust` and `typescript` fixtures target the current
+[`2026-07-28`](https://modelcontextprotocol.io/specification/2026-07-28/)
+spec revision (stateless requests, `server/discover`) via each language's v2+
+SDK — FastMCP 4 implements the same revision but is still beta upstream, so
+the Python fixtures stay on the 3.x line for now.
 
 | Folder | Manager | Detected via |
 | --- | --- | --- |
@@ -13,6 +20,8 @@ foro.sh's build pipeline detects:
 | [`poetry/`](poetry) | Poetry | `poetry.lock` / `[tool.poetry]` |
 | [`pipenv/`](pipenv) | pipenv | `Pipfile` / `Pipfile.lock` |
 | [`requirements/`](requirements) | uv-pip | `requirements.txt` (no `pyproject.toml`) |
+| [`rust/`](rust) | Cargo | `Cargo.toml` / `Cargo.lock` |
+| [`typescript/`](typescript) | npm | `package.json` / `package-lock.json` |
 
 Each folder has its own `foro.yaml` manifest, so the repo has more than one
 deployable project — see foro-sh/platform#296 (manifest scanning + per-manager
@@ -27,6 +36,10 @@ uv sync && uv run server.py
 
 (swap `uv sync && uv run` for the matching manager's install/run commands —
 see each folder's README).
+
+The `rust` and `typescript` fixtures aren't Python, so they don't follow that
+pattern — see [`rust/README.md`](rust/README.md) (`cargo run`) and
+[`typescript/README.md`](typescript/README.md) (`npm install && npm run dev`).
 
 The server binds to `0.0.0.0` on `$MCP_PORT` (default `8000`) and serves MCP
 at `/mcp/`.
