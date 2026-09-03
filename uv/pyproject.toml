@@ -12,3 +12,6 @@ dependencies = [
 # An application, not a library: install the dependencies into the venv but do
 # not try to build/install this project itself (no package layout needed).
 package = false
+
+[tool.foro]
+egress = ["example.com:443"]
